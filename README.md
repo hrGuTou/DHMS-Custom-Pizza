@@ -1,4 +1,4 @@
-# LMTD-Group4
+# DHMS Custom Pizza
 
 ## Project Name
 Restaurant Ordering App<br/>
