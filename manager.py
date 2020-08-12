@@ -5,7 +5,8 @@ Main CRUD methods
 """
 
 from order import OrderPizza
-
+# import json
+import pickle
 
 class Manager:
   def __init__ (self):
@@ -18,7 +19,7 @@ class Manager:
     name = input("Please enter your name: ")
     while True:
       try:
-        phoneNumber = int(input("Please enter your phone number: "))
+        phoneNumber = int(input("Please enter your 10 digit phone number: "))
       except:
         print("Please enter numbers!")
         continue
@@ -32,8 +33,18 @@ class Manager:
     self.orders[phoneNumber] = OrderPizza(pizzaType, name, phoneNumber, topping, sauce)
 
     print("Order created! \n")
-    
-# Update order for custom pizza
+
+  def save(self):
+    with open("tasks.json", "wb") as fp:   #Pickling
+      pickle.dump(self.orders, fp)
+      print("\nTasks saved! \n\n")
+  def load(self):
+    with open("tasks.json", "rb") as fp:   #Unpickling
+      self.orders = pickle.load(fp)
+      self.latest_ID = len(self.orders)
+      print("Tasks loaded!")
+  
+  # Update order for custom pizza
   def update_order(self):
     while True:
       try:
@@ -124,3 +135,27 @@ class Manager:
     
     for order in self.orders:
       print(self.orders.get(order))
+
+
+#   ## write my data to a JSON file
+#   def save(python_data):
+#     with open('data.json', 'w') as output_file:
+#       json.dump(python_data, output_file, indent=4) 
+
+
+#   ## read data from JSON file
+#   def load():
+#     with open('data.json', 'r') as json_file:
+#       data = json.load(json_file)
+#       print(data)
+  
+# # Serializing
+# data = json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+# print(data)
+
+
+# # Deserializing
+# decoded_team = self.from_json(json.loads(data))
+# print(decoded_team)
+# print(decoded_team.students)
+
